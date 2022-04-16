@@ -1,0 +1,9 @@
+
+Dedicated server configuration
+https://wiki.teamfortress.com/wiki/Dedicated_server_configuration
+
+TF2 Dedicated Server Setup Guide (Detailed)
+https://steamcommunity.com/sharedfiles/filedetails/?id=285509230
+
+How to make a Team Fortress 2 Dedicated Server (srcds)
+https://steamcommunity.com/sharedfiles/filedetails/?id=1877365208
