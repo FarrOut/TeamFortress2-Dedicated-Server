@@ -7,3 +7,23 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=285509230
 
 How to make a Team Fortress 2 Dedicated Server (srcds)
 https://steamcommunity.com/sharedfiles/filedetails/?id=1877365208
+
+
+
+=====-----=====-----=====-----=====-----=====-----=====-----=====-----
+Tasks:
+------
+
+- Install SteamCMD
+
+
+
+
+=====-----=====-----=====-----=====-----=====-----=====-----=====-----
+
+docker build -t tf2:dev .
+
+
+
+
+=====-----=====-----=====-----=====-----=====-----=====-----=====-----
