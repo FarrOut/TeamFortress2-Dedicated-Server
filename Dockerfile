@@ -9,7 +9,9 @@ RUN sed -i -e "s|mirrorlist=|#mirrorlist=|g" /etc/yum.repos.d/CentOS-* && \
     sed -i -e "s|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g" /etc/yum.repos.d/CentOS-*
 
 RUN yum update -y && \
-    yum install -y glibc.i686 libstdc++.i686
+    yum install -y glibc.i686 libstdc++.i686 \
+    # Install tmux and/or screen for easy server management
+    tmux
 
 # Create and switch to the steam user
 RUN groupadd steamers
@@ -22,3 +24,4 @@ WORKDIR /home/steam/SteamCMD
 
 # Download and extract SteamCMD for Linux.
 RUN curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -
+
