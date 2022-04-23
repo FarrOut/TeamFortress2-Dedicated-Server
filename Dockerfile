@@ -12,6 +12,8 @@ RUN yum update -y && \
     yum install -y glibc.i686 libstdc++.i686
 
 # Create and switch to the steam user
+RUN groupadd steamers
+RUN useradd --create-home --shell /bin/bash steam
 USER steam:steamers
 
 # Create a directory for SteamCMD and switch to it.
