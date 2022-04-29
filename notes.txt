@@ -21,9 +21,11 @@ Tasks:
 
 =====-----=====-----=====-----=====-----=====-----=====-----=====-----
 
+# Build image
 docker build -t tf2:dev .
 
-
+# Launch interactive container
+docker run -a stdin -a stdout -i -t tf2:dev /bin/bash
 
 
 =====-----=====-----=====-----=====-----=====-----=====-----=====-----
