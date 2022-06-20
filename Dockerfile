@@ -25,17 +25,20 @@ ENV USER steam
 ENV HOMEDIR "/home/${USER}"
 RUN groupadd steamers
 RUN useradd --create-home --shell /bin/bash "${USER}"
-USER steam:steamers
 
 # Create a directory for Steam and switch to it.
 ENV STEAMCMDDIR "${HOMEDIR}/steamcmd"
 RUN mkdir "${STEAMCMDDIR}"
-RUN mkdir -p "~/.steam/sdk32"
 WORKDIR "${STEAMCMDDIR}"
-RUN ln -s "${STEAMCMDDIR}/linux32/steamclient.so" "${HOMEDIR}/.steam/sdk32/steamclient.so"
-RUN ln -s "${STEAMCMDDIR}/linux32/steamclient.so" "/usr/lib/i386-linux-gnu/steamclient.so"
-RUN ln -s "${STEAMCMDDIR}/linux64/steamclient.so" "/usr/lib/x86_64-linux-gnu/steamclient.so"
-RUN ln -s "${STEAMCMDDIR}/linux32/steamcmd\" \"${STEAMCMDDIR}/linux32/steam"
+# RUN mkdir -p "~/.steam/sdk32"
+# RUN ls "${STEAMCMDDIR}/linux32/"
+# RUN ln -s "${STEAMCMDDIR}/linux32/steamclient.so" "${HOMEDIR}/.steam/sdk32/steamclient.so"
+# RUN ln -s "${STEAMCMDDIR}/linux32/steamclient.so" "/usr/lib/i386-linux-gnu/steamclient.so"
+# RUN ln -s "${STEAMCMDDIR}/linux64/steamclient.so" "/usr/lib/x86_64-linux-gnu/steamclient.so"
+# RUN ln -s "${STEAMCMDDIR}/linux32/steamcmd\" \"${STEAMCMDDIR}/linux32/steam"
+
+RUN chown -R steam:steamers "${STEAMCMDDIR}"
+USER steam:steamers
 
 # Download and extract SteamCMD for Linux.
 RUN curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -
@@ -43,8 +46,7 @@ RUN curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.t
 # Download game
 ENV STEAMAPPDIR "/home/steam/${STEAMAPP}-dedicated"
 RUN mkdir -p "${STEAMAPPDIR}" || true
-WORKDIR "${STEAMAPPDIR}"
-RUN "/home/steam/SteamCMD/steamcmd.sh" +force_install_dir "${STEAMAPPDIR}" \
+RUN "${STEAMCMDDIR}/steamcmd.sh" +force_install_dir "${STEAMAPPDIR}" \
 				+login anonymous \
 				+app_update "${STEAMAPPID}" \
 				+quit
@@ -67,7 +69,6 @@ CMD "${STEAMAPPDIR}/srcds_run -game \"${STEAMAPP}\" -console -autoupdate " \
     "-port \"${SRCDS_PORT}\"" \
     "+tv_port \"${SRCDS_TV_PORT}\"" \
     "--debug"
-
 
 #CMD ["${STEAMAPPDIR}/srcds_run", "-game \"${STEAMAPP}\"", "-console", "-autoupdate",
 #                        " -steam_dir \"${STEAMCMDDIR}\"",
@@ -110,4 +111,3 @@ EXPOSE  27015/tcp \
 
 # cm2network/tf2
 # https://github.com/CM2Walki/TF2/blob/master/etc/entry.sh
-
